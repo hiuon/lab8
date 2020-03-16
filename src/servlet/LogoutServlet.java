@@ -24,10 +24,10 @@ public class LogoutServlet extends ChatServlet {
                 response.addCookie(new Cookie("sessionId", null));
                 response.sendRedirect(response.encodeRedirectURL("/chat/"));
             } else {
-                response.sendRedirect(response.encodeRedirectURL("/chat/view.htm"));
+                response.sendRedirect(response.encodeRedirectURL("/chat/view.html"));
             }
         } else {
-            response.sendRedirect(response.encodeRedirectURL("/chat/view.htm"));
+            response.sendRedirect(response.encodeRedirectURL("/chat/view.html"));
         }
     }
 }

@@ -22,6 +22,6 @@ public class NewMessageServlet extends ChatServlet {
                         Calendar.getInstance().getTimeInMillis()));
             }
         }
-        response.sendRedirect("/chat/compose_message.htm");
+        response.sendRedirect("/chat/message.html");
     }
 }
