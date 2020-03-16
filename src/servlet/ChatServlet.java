@@ -4,9 +4,11 @@ import entity.ChatMessage;
 import entity.ChatUser;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+@WebServlet(name = "ChatServlet")
 public class ChatServlet extends javax.servlet.http.HttpServlet {
     private static final long serialVersionUID = 1L;
     protected HashMap<String, ChatUser> activeUsers;
