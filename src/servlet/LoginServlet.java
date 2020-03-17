@@ -25,11 +25,15 @@ public class LoginServlet extends ChatServlet {
         String errorMessage = (String)request.getSession().getAttribute("error");
         String previousSessionId = null;
         if (name==null) {
-            for (Cookie aCookie: request.getCookies()) {
-                if (aCookie.getName().equals("sessionId")) {
-                    previousSessionId = aCookie.getValue();
-                    break;
+            try {
+                for (Cookie aCookie : request.getCookies()) {
+                    if (aCookie.getName().equals("sessionId")) {
+                        previousSessionId = aCookie.getValue();
+                        break;
+                    }
                 }
+            }catch (NullPointerException e){
+                name = null;
             }
             if (previousSessionId!=null) {
                 for (ChatUser aUser: activeUsers.values()) {
@@ -52,12 +56,11 @@ public class LoginServlet extends ChatServlet {
         if (errorMessage!=null) {
             pw.println("<p><font color='red'>" + errorMessage + "</font></p>");
         }
-        pw.println("<form action='/chat/' method='post'>Введите имя: <input type='text' name='name' value=''><input type='submit' value='Войти в чат'>");
+        pw.println("<form action='/lab8' method='post'>Введите имя: <input type='text' name='name' value=''><input type='submit' value='Войти в чат'>");
         pw.println("</form></body></html>");
         request.getSession().setAttribute("error", null);
     }
-    protected void doPost(HttpServletRequest request, HttpServletResponse
-            response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String name = (String)request.getParameter("name");
         String errorMessage = null;
@@ -69,7 +72,7 @@ public class LoginServlet extends ChatServlet {
         if (errorMessage!=null) {
             request.getSession().setAttribute("name", null);
             request.getSession().setAttribute("error", errorMessage);
-            response.sendRedirect(response.encodeRedirectURL("/chat/"));
+            response.sendRedirect(response.encodeRedirectURL("/lab8/"));
         }
     }
     String processLogonAttempt(String name, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -81,15 +84,13 @@ public class LoginServlet extends ChatServlet {
                 activeUsers.put(aUser.getName(), aUser);
             }
         }
-        if (aUser.getSessionId().equals(sessionId) ||
-                aUser.getLastInteractionTime()<(Calendar.getInstance().getTimeInMillis()-
-                        sessionTimeout*1000)) {
+        if (aUser.getSessionId().equals(sessionId) || aUser.getLastInteractionTime()<(Calendar.getInstance().getTimeInMillis()- sessionTimeout*1000)) {
             request.getSession().setAttribute("name", name);
             aUser.setLastInteractionTime(Calendar.getInstance().getTimeInMillis());
             Cookie sessionIdCookie = new Cookie("sessionId", sessionId);
             sessionIdCookie.setMaxAge(60*60*24*365);
             response.addCookie(sessionIdCookie);
-            response.sendRedirect(response.encodeRedirectURL("/chat/view.html"));
+            response.sendRedirect(response.encodeRedirectURL("/lab8/view.html"));
             return null;
         } else {
             return "Извините, но имя <strong>" + name + "</strong> уже кем-то занято. Пожалуйста выберите другое имя!";

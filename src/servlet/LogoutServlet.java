@@ -22,12 +22,12 @@ public class LogoutServlet extends ChatServlet {
                 }
                 request.getSession().setAttribute("name", null);
                 response.addCookie(new Cookie("sessionId", null));
-                response.sendRedirect(response.encodeRedirectURL("/chat/"));
+                response.sendRedirect(response.encodeRedirectURL("/lab8/"));
             } else {
-                response.sendRedirect(response.encodeRedirectURL("/chat/view.html"));
+                response.sendRedirect(response.encodeRedirectURL("/lab8/view.html"));
             }
         } else {
-            response.sendRedirect(response.encodeRedirectURL("/chat/view.html"));
+            response.sendRedirect(response.encodeRedirectURL("/lab8/view.html"));
         }
     }
 }
