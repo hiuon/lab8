@@ -10,13 +10,11 @@ import entity.ChatUser;
 @WebServlet(name = "LogoutServlet")
 public class LogoutServlet extends ChatServlet {
     private static final long serialVersionUID = 1L;
-    protected void doGet(HttpServletRequest request, HttpServletResponse
-            response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = (String) request.getSession().getAttribute("name");
         if (name!=null) {
             ChatUser aUser = activeUsers.get(name);
-            if (aUser.getSessionId().equals((String)
-                    request.getSession().getId())) {
+            if (aUser.getSessionId().equals((String)request.getSession().getId())) {
                 synchronized (activeUsers) {
                     activeUsers.remove(name);
                 }
