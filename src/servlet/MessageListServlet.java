@@ -1,6 +1,8 @@
 package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +19,9 @@ public class MessageListServlet extends ChatServlet {
         pw.println("<body>");
         for (int i=messages.size()-1; i>=0; i--) {
             ChatMessage aMessage = messages.get(i);
-            pw.println("<div><strong>" + aMessage.getAuthor().getName() + "</strong>: " + aMessage.getMessage() + "</div>");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+            Date date = new Date(aMessage.getTimestamp());
+            pw.println("<div><strong>" + aMessage.getAuthor().getName() + "(" + sdf.format(date) + ")"+"</strong>: " + aMessage.getMessage() + "</div>");
         }
         pw.println("</body></html>");
     }

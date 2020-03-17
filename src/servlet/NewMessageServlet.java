@@ -1,6 +1,8 @@
 package servlet;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,11 +17,9 @@ public class NewMessageServlet extends ChatServlet {
         request.setCharacterEncoding("UTF-8");
         String message = (String)request.getParameter("message");
         if (message!=null && !"".equals(message)) {
-            ChatUser author = activeUsers.get((String)
-                    request.getSession().getAttribute("name"));
+            ChatUser author = activeUsers.get((String) request.getSession().getAttribute("name"));
             synchronized (messages) {
-                messages.add(new ChatMessage(message, author,
-                        Calendar.getInstance().getTimeInMillis()));
+                messages.add(new ChatMessage(message, author, Calendar.getInstance().getTimeInMillis()));
             }
         }
         response.sendRedirect("/lab8/message.html");

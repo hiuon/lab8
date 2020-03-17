@@ -56,7 +56,7 @@ public class LoginServlet extends ChatServlet {
         if (errorMessage!=null) {
             pw.println("<p><font color='red'>" + errorMessage + "</font></p>");
         }
-        pw.println("<form action='/lab8/' method='post'>Введите имя: <input type='text' name='name' value=''><input type='submit' value='Войти в чат'>");
+        pw.println("<form action='/lab8/' method='post'>Enter the name: <input type='text' name='name' value=''><input type='submit' value='Connect to the chat'>");
         pw.println("</form></body></html>");
         request.getSession().setAttribute("error", null);
     }
@@ -65,7 +65,7 @@ public class LoginServlet extends ChatServlet {
         String name = (String)request.getParameter("name");
         String errorMessage = null;
         if (name==null || "".equals(name)) {
-            errorMessage = "Имя пользователя не может быть пустым!";
+            errorMessage = "Name cannot be empty!";
         } else {
             errorMessage = processLogonAttempt(name, request, response);
         }
@@ -93,7 +93,7 @@ public class LoginServlet extends ChatServlet {
             response.sendRedirect(response.encodeRedirectURL("/lab8/view.html"));
             return null;
         } else {
-            return "Извините, но имя <strong>" + name + "</strong> уже кем-то занято. Пожалуйста выберите другое имя!";
+            return "Sorry, <strong>" + name + "</strong> is engaged. Please try another one!";
         }
     }
 }
